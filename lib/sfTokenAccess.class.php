@@ -16,7 +16,7 @@
  */
 class sfTokenAccess
 {
-  protected $REQUIRED_OPTIONS = array('lifetime', 'salt', 'length');
+  protected $required_options = array('lifetime', 'salt', 'length', 'backend');
 
   /**
    * @var sfMemcacheCache $cache
@@ -35,7 +35,7 @@ class sfTokenAccess
   {
     $this->options = sfConfig::get('app_sfTokenAccess_param');
 
-    foreach ($this->REQUIRED_OPTIONS as $option)
+    foreach ($this->required_options as $option)
     {
       if (!isset($this->options[$option]) || $this->options[$option] == '' )
       {
@@ -43,7 +43,8 @@ class sfTokenAccess
       }
     }
 
-    $this->cache = new sfMemcacheCache(sfConfig::get('app_sfTokenAccess_cache'));
+    $backend = $this->options['backend'];
+    $this->cache = new $backend(sfConfig::get('app_sfTokenAccess_cache'));
   }
 
   final public static function getInstance()
@@ -80,7 +81,7 @@ class sfTokenAccess
 
   public function validateToken($token)
   {
-    if ( $token == $this->cache->get($token, false) )
+    if ( $this->cache->has($token) )
     {
       return $token;
     } else
