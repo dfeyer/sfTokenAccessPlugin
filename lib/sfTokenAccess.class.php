@@ -79,10 +79,11 @@ class sfTokenAccess
     return $this->generateToken();
   }
 
-  public function validateToken($token)
+  public function validateToken($token, $remove = false)
   {
     if ( $this->cache->has($token) )
     {
+      if ($remove) $this->cache->remove($token);
       return $token;
     } else
     {
