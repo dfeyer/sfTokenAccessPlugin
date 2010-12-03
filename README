@@ -21,3 +21,7 @@ try (sfTokenAccess::getInstance()->validateToken($token))
 {
   ...
 }
+
+If you need to delete your token after validation, you can use:
+
+sfTokenAccess::getInstance()->validateToken($token, true);
