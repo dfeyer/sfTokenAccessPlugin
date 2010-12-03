@@ -1,6 +1,7 @@
 all:
   sfTokenAccess:
     param:
+      backend:                  sfMemcacheCache
       salt:                     my_secrect_salt
       length:                   32
       lifetime:                 30
