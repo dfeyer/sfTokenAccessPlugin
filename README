@@ -1,0 +1,23 @@
+sfRestAccessPlugin
+==================
+
+This plugin provide a simple API based on memcache to generate token with limited life time.
+This token can be used to limit the validity of an URL or a webservice call.
+
+This plugin require mcrype for PHP 5.3 or SSL extension installed correctly and loaded in your
+php.ini, so check your configuration.
+
+Usage:
+======
+
+$token = sfTokenAccess::getInstance()->generateToken();
+
+...
+
+try (sfTokenAccess::getInstance()->validateToken($token))
+{
+  ...
+} catch (sfTokenAccessException $e)
+{
+  ...
+}
